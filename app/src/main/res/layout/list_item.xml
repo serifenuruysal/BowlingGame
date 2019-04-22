@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:id="@+id/relativeLayout"
+  android:layout_width="match_parent"
+  android:layout_height="40dp"
+  android:background="@color/colorPrimary"
+  android:orientation="horizontal"
+  app:layout_constraintStart_toStartOf="parent"
+  app:layout_constraintTop_toTopOf="parent">
+  <TextView
+    android:id="@+id/tvRound"
+    android:textStyle="bold"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_centerVertical="true"
+    android:textColor="@android:color/white"
+    android:textSize="15sp"
+    android:layout_margin="8dp"
+    tools:text="10"/>
+  />
+  <View
+    android:layout_alignParentBottom="true"
+    android:layout_width="match_parent"
+    android:layout_height="1dp"
+    android:background="@android:color/white"/>
+</RelativeLayout>
