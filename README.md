@@ -4,6 +4,7 @@ Developed with MVP design pattern
 Dependencies
 minSdkVersion 19
 
+Game Description
 Bowling is played by throwing a ball down a narrow alley
 • Bowling is played by throwing a ball down a narrow alley toward ten wooden pins. The object is to knock down as many pins as possible per throw
 • The game is played in ten frames. At the beginning of each frame, all ten pins are set up. The player then gets two tries to knock them all down.
