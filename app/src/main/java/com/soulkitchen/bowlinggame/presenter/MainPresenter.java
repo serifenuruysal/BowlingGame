@@ -61,64 +61,79 @@ public class MainPresenter implements MainContract.Presenter {
     if (isStrike) {
 
       if (isLastRoundStrike) {
-        scoreAfterStrike = scoreAfterStrike + 10;
-        counterStrike++;
-        if (counterStrike >= 2) {
-          totalScore = totalScore + scoreAfterStrike;
-          scoreAfterStrike = 10;
-          counterStrike = 0;
-          isLastRoundStrike = false;
-          listOfTotalScore.add(totalScore);
-          view.notifyItemAddedToTotal(listOfTotalScore.size());
-        }
+        checkRoundAddForStrike();
+      } else if (isLastRoundSpare) {
+        checkRoundAddForSpare(model);
       }
       isLastRoundStrike = true;
       scoreAfterStrike = scoreAfterStrike + model.getCurrentScore();
 
     } else if (isSpare) {
-      isLastRoundSpare = true;
-      scoreAfterSpare = scoreAfterSpare + 10;
-      counterFrame = 0;
-      lastFrameScore = 10;
-      currentFrameScore = 0;
+      if (isLastRoundStrike) {
+
+        checkRoundAddForStrike();
+      } else if (isLastRoundSpare) {
+        checkRoundAddForSpare(model);
+      }else{
+        isLastRoundSpare = true;
+        scoreAfterSpare = scoreAfterSpare + 10;
+        counterFrame = 0;
+        totalScore=totalScore+10;
+        lastFrameScore = 10;
+        currentFrameScore = 0;
+      }
+
     } else {
       if (isLastRoundStrike) {
         scoreAfterStrike = scoreAfterStrike + model.getCurrentScore();
-        counterStrike++;
-        if (counterStrike >= 2) {
-          totalScore = totalScore + scoreAfterStrike;
-          scoreAfterStrike = 10;
-          counterStrike = 0;
-          isLastRoundStrike = false;
-          listOfTotalScore.add(totalScore);
-          view.notifyItemAddedToTotal(listOfTotalScore.size());
-        }
+        checkRoundAddForStrike();
 
 
       } else if (isLastRoundSpare) {
-        scoreAfterSpare = scoreAfterSpare + model.getCurrentScore();
-        counterSpare++;
-        if (counterSpare >= 1) {
-          totalScore = totalScore + scoreAfterSpare;
-          counterSpare = 0;
-          isLastRoundSpare = false;
-          scoreAfterSpare = 0;
-          listOfTotalScore.add(totalScore);
-          view.notifyItemAddedToTotal(listOfTotalScore.size());
-        }
+        checkRoundAddForSpare(model);
 
       }
 
     }
     if (counterFrame >= 2 && !isLastRoundStrike && !isLastRoundSpare) {
-      lastFrameScore = currentFrameScore;
-      totalScore = totalScore + lastFrameScore;
-      counterFrame = 0;
-      currentFrameScore = 0;
+      setEndOfCurrentFrame();
+    }
+
+  }
+
+  private void setEndOfCurrentFrame() {
+    lastFrameScore = currentFrameScore;
+    totalScore = totalScore + lastFrameScore;
+    counterFrame = 0;
+    currentFrameScore = 0;
+    listOfTotalScore.add(totalScore);
+    view.notifyItemAddedToTotal(listOfTotalScore.size());
+  }
+
+  private void checkRoundAddForSpare(FrameModel model) {
+    scoreAfterSpare = scoreAfterSpare + model.getCurrentScore();
+    counterSpare++;
+    if (counterSpare >= 1) {
+      totalScore = totalScore + scoreAfterSpare;
+      counterSpare = 0;
+      isLastRoundSpare = false;
+      scoreAfterSpare = 0;
       listOfTotalScore.add(totalScore);
       view.notifyItemAddedToTotal(listOfTotalScore.size());
     }
+  }
 
+  private void checkRoundAddForStrike() {
+    scoreAfterStrike = scoreAfterStrike + 10;
+    counterStrike++;
+    if (counterStrike >= 2) {
+      totalScore = totalScore + scoreAfterStrike;
+      scoreAfterStrike = 10;
+      counterStrike = 0;
+      isLastRoundStrike = false;
+      listOfTotalScore.add(totalScore);
+      view.notifyItemAddedToTotal(listOfTotalScore.size());
+    }
   }
 
 
